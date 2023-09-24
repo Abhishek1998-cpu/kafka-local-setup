@@ -1,7 +1,24 @@
-echo "# kafka-local-setup" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin git@github.com:Abhishek1998-cpu/kafka-local-setup.git
-git push -u origin main
+Link of the Command used in the Video - https://gist.github.com/piyushgarg-dev/32cadf6420c452b66a9a6d977ade0b01
+
+Command - docker run -p 2181:2181 zookeeper
+Explanation ::: 
+Run on Port 2181
+If zookeeper image is not available in local then it will pull from Docker Hub
+
+kafka default running port is 9092
+Command - docker run -p 9092:9092 \
+-e KAFKA_ZOOKEEPER_CONNECT=<PRIVATE_IP>:2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://<PRIVATE_IP>:9092 \
+-e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
+confluentinc/cp-kafka 
+Explanation ::: 
+Run confluentinc/cp-kafka image on port 9092, -e will be used to set some environment variables
+Replace <PRIVATE_IP> with your current IP Address (Run ifconfig or go to Wifi Settings for getting it)
+KAFKA_ZOOKEEPER_CONNECT -> Tell our kafka server that where our Zookeeper Service is running 
+KAFKA_ADVERTISED_LISTENERS -> Tell kafka on which port it is running
+KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR -> Tell kafka how much topic replication is required (Not required by default)
+confluentinc/cp-kafka -> Name of the kafka image
+
+Admin - Infra Setup (Topic / Partitioning, etc.)
+Producer - Produce a message to the topic 
+Consumer - Consumer a message from the topic
